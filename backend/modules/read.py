@@ -1,5 +1,6 @@
 import cv2
 import os
+import numpy as np
 
 def read_image(input_path):
     # Đọc ảnh
