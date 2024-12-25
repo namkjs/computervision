@@ -1,4 +1,4 @@
-from read import *
+from modules.read import *
 def laplacian_filter_opencv_color(image):
 
     # Tách các kênh màu

@@ -25,7 +25,3 @@ def read_image(input_path):
 
     return img
 
-# input_path = "static/uploads/input.png"
-# image_info = read_image(input_path)
-# print(image_info)
-# print("Image Info:", image_info)

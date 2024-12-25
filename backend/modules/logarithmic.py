@@ -1,5 +1,5 @@
 import numpy as np
-from read import *
+from modules.read import *
 
 def log_transform(image, c=1):
     image = np.array(image, dtype=np.float32)

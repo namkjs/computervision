@@ -1,4 +1,4 @@
-from read import *
+from modules.read import *
 import numpy as np
 def power_law_transform(image, gamma, c=1):
     # Chuyển ảnh sang dạng float để tính toán

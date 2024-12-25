@@ -1,14 +1,23 @@
 from flask import Flask, request, jsonify, send_file
 import os
-from backend.modules.enhance import enhance
-from modules import preprocess, segment
-
+import cv2
+import numpy as np
+from modules.laplacian import laplacian_filter_algorithm_color, laplacian_filter_opencv_color
+from modules.high_pass import highpass_filter_color
+from modules.low_pass import lowpass_filter_color
+from modules.histogram_equalization import *
+from modules.logarithmic import *
+from modules.preprocess import *
+from modules.mean_filter import *
+from modules.median_filter import *
+from modules.power_law import * 
 app = Flask(__name__)
 UPLOAD_FOLDER = 'static/uploads'
 RESULT_FOLDER = 'static/results'
 
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs(RESULT_FOLDER, exist_ok=True)
+
 @app.route('/')
 def home():
     return "Image Processing API is running!"
@@ -31,18 +40,53 @@ def process_image():
     data = request.get_json()
     filepath = data.get('filepath')
     operation = data.get('operation')
+    params = data.get('params', {})
 
     if not filepath or not os.path.exists(filepath):
         return jsonify({"error": "File not found"}), 404
 
-    if operation == "enhance":
-        result_path = enhance.enhance_image(filepath, RESULT_FOLDER)
-    elif operation == "segment":
-        result_path = segment.segment_image(filepath, RESULT_FOLDER)
+    input_image = cv2.imread(filepath)
+
+    if input_image is None:
+        return jsonify({"error": "Invalid image file"}), 400
+
+    result_image = None
+
+    if operation == "laplacian_opencv":
+        result_image = laplacian_filter_opencv_color(input_image)
+    elif operation == "laplacian_algorithm":
+        result_image = laplacian_filter_algorithm_color(input_image)
+    elif operation == "highpass":
+        cutoff = params.get("cutoff", 30)  
+        result_image = highpass_filter_color(input_image, cutoff=cutoff)
+    elif operation == "lowpass":
+        cutoff = params.get("cutoff", 30)  
+        result_image = lowpass_filter_color(input_image, cutoff=cutoff)
+    elif operation == "power_law":
+        gamma = params.get("gamma", 1.0)  
+        result_image = power_law_transform(input_image, gamma=gamma)
+    elif operation == "mean_filter_algorithm":
+        kernel_size = params.get("kernel_size", 3)  
+        result_image = mean_filter_algorithm_color(input_image, kernel_size=kernel_size)
+    elif operation == "mean_filter_opencv":
+        kernel_size = params.get("kernel_size", 3)  
+        result_image = mean_filter_opencv_color(input_image, kernel_size=kernel_size)
+    elif operation == "median_filter_algorithm":
+        kernel_size = params.get("kernel_size", 3)  
+        result_image = median_filter_algorithm_color(input_image, kernel_size=kernel_size)
+    elif operation == "gray":
+        result_image = gray(input_image)
+    elif operation == "histogram":
+        result_image = gray_opencv(input_image, kernel_size=kernel_size)
     else:
         return jsonify({"error": "Invalid operation"}), 400
 
-    return jsonify({"message": "Image processed successfully", "result_path": result_path})
+    temp_result_path = os.path.join(RESULT_FOLDER, "temp_result.jpg")
+    cv2.imwrite(temp_result_path, result_image)
+
+    return send_file(temp_result_path, mimetype='image/jpeg')
+
+
 
 @app.route('/download/<filename>', methods=['GET'])
 def download_file(filename):

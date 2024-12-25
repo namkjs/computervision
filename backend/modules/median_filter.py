@@ -1,4 +1,4 @@
-from read import *
+from modules.read import *
 def median_filter_algorithm(image, kernel_size=3):
     height, width = image.shape
     pad = kernel_size // 2

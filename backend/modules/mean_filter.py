@@ -1,17 +1,6 @@
-from read import *
-import numpy as np
+from modules.read import *
 
 def mean_filter_algorithm(image, kernel_size=3):
-    """
-    Thực hiện Mean Filter bằng cách tự triển khai thuật toán.
-
-    Args:
-        image (numpy.ndarray): Ảnh đầu vào, dạng numpy array (grayscale).
-        kernel_size (int): Kích thước kernel, mặc định là 3x3.
-
-    Returns:
-        numpy.ndarray: Ảnh sau khi áp dụng Mean Filter.
-    """
     height, width = image.shape
     pad = kernel_size // 2
     padded_image = np.pad(image, pad, mode='constant', constant_values=0)
@@ -25,7 +14,7 @@ def mean_filter_algorithm(image, kernel_size=3):
             filtered_image[i, j] = np.mean(region)
 
     return np.uint8(filtered_image)
-def mean_filter_algorithm_color(image, kernel_size=3):
+def mean_filter_algorithm_color(image, kernel_size):
 
     # Tách ảnh thành các kênh màu
     channels = cv2.split(image)
@@ -39,7 +28,7 @@ def mean_filter_algorithm_color(image, kernel_size=3):
     return cv2.merge(filtered_channels)
 
 
-def mean_filter_opencv_color(image, kernel_size=3):
+def mean_filter_opencv_color(image, kernel_size):
     return cv2.blur(image, (kernel_size, kernel_size))
 
 
