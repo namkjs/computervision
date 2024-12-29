@@ -2,6 +2,8 @@ from flask import Flask, request, jsonify, send_file
 import os
 import cv2
 import numpy as np
+from flask_cors import CORS
+
 from modules.laplacian import laplacian_filter_algorithm_color, laplacian_filter_opencv_color
 from modules.high_pass import highpass_filter_color
 from modules.low_pass import lowpass_filter_color
@@ -14,6 +16,8 @@ from modules.power_law import *
 app = Flask(__name__)
 UPLOAD_FOLDER = 'static/uploads'
 RESULT_FOLDER = 'static/results'
+CORS(app, resources={r"/upload": {"origins": "http://127.0.0.1:8000"}})
+CORS(app, resources={r"/process": {"origins": "http://127.0.0.1:8000"}})
 
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs(RESULT_FOLDER, exist_ok=True)
@@ -76,8 +80,17 @@ def process_image():
         result_image = median_filter_algorithm_color(input_image, kernel_size=kernel_size)
     elif operation == "gray":
         result_image = gray(input_image)
+    elif operation == "histogram_opencv":
+        result_image = histogram_opencv(input_image)
     elif operation == "histogram":
-        result_image = gray_opencv(input_image, kernel_size=kernel_size)
+        result_image = histogram_equalization_gray(input_image)
+    elif operation == "logarithmic":
+        c = params.get("c", 1)
+        result_image = log_transform(input_image, c)
+    elif operation == "powerlaw":
+        gamma = params.get("gamma", 0.1)
+        c = params.get("c", 1)
+        result_image = power_law_transform(input_image, gamma, c)
     else:
         return jsonify({"error": "Invalid operation"}), 400
 
