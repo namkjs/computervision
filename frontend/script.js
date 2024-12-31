@@ -1,4 +1,4 @@
-const BACKEND_URL = "http://127.0.0.1:5000";
+const BACKEND_URL = "https://computervision-sfyz.onrender.com";
 
 // Upload Image
 document.getElementById("uploadForm").addEventListener("submit", function (e) {
