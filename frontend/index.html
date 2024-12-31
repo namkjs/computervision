@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Image Processing</title>
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body class="bg-light">
     <div class="container py-5">
         <h1 class="text-center mb-4">Image Processing API</h1>
-        
+
         <!-- Upload Image -->
         <div class="card mb-4 shadow-sm">
             <div class="card-body">
@@ -33,6 +34,7 @@
                     <div class="mb-3">
                         <label for="operation" class="form-label">Select Operation:</label>
                         <select id="operation" class="form-select" name="operation" required>
+                            <!-- Các chức năng cũ -->
                             <option value="laplacian_opencv">Laplacian (OpenCV)</option>
                             <option value="laplacian_algorithm">Laplacian (Algorithm)</option>
                             <option value="highpass">High-Pass Filter</option>
@@ -44,24 +46,27 @@
                             <option value="mean_filter_algorithm">Mean Filter (Algorithm)</option>
                             <option value="median_filter_algorithm">Median Filter (Algorithm)</option>
                             <option value="gray">Convert to Grayscale</option>
+
+                            <!-- Các chức năng mới -->
+                            <option value="dilation_opencv">Dilation (OpenCV)</option>
+                            <option value="dilation_algorithm">Dilation (Algorithm)</option>
+                            <option value="erosion_opencv">Erosion (OpenCV)</option>
+                            <option value="erosion_algorithm">Erosion (Algorithm)</option>
+                            <option value="opening_opencv">Opening (OpenCV)</option>
+                            <option value="closing_opencv">Closing (OpenCV)</option>
+                            <option value="kmeans_clustering">K-Means Clustering</option>
+                            <option value="watershed">Watershed Segmentation</option>
+                            <option value="pca">PCA (Principal Component Analysis)</option>
+                            <option value="rgb_to_ycbcr">RGB to YCbCr</option>
+                            <option value="ycbcr_to_rgb">YCbCr to RGB</option>
+                            <option value="rgb_to_hsv">RGB to HSV</option>
+                            <option value="hsv_to_rgb">HSV to RGB</option>
+                            <option value="jpeg_compress">JPEG Compression</option>
                         </select>
                     </div>
-                    
-                    <div id="params" class="mb-3">
-                        <h3 class="h5">Parameters (Optional)</h3>
-                        <div class="mb-3">
-                            <label for="cutoff" class="form-label">Cutoff:</label>
-                            <input type="number" class="form-control" id="cutoff" name="cutoff">
-                        </div>
-                        <div class="mb-3">
-                            <label for="gamma" class="form-label">Gamma:</label>
-                            <input type="number" step="0.1" class="form-control" id="gamma" name="gamma">
-                        </div>
-                        <div class="mb-3">
-                            <label for="kernel_size" class="form-label">Kernel Size:</label>
-                            <input type="number" class="form-control" id="kernel_size" name="kernel_size">
-                        </div>
-                    </div>
+
+                    <!-- Tham số -->
+                    <div id="params" class="mb-3"></div>
 
                     <button type="submit" class="btn btn-success w-100">Process</button>
                 </form>
@@ -77,8 +82,7 @@
         </div>
     </div>
 
-    <!-- Bootstrap JS Bundle -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="script.js"></script>
 </body>
+
 </html>
