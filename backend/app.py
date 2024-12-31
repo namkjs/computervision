@@ -34,7 +34,6 @@ from modules.color_transform import rgb_to_ycbcr, ycbcr_to_rgb, rgb_to_hsv, hsv_
 from modules.huffman import huffman_encode, huffman_decode
 from modules.jpeg import compress_to_jpeg
 
-port = int(os.environ.get("PORT", 5000))
 
 app = Flask(__name__)
 UPLOAD_FOLDER = "static/uploads"
@@ -242,3 +241,7 @@ def download_file(filename):
     if os.path.exists(path):
         return send_file(path)
     return jsonify({"error": "File not found"}), 404
+
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)
