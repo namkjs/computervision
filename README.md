@@ -4,6 +4,10 @@
 Dự án **Image Processing API** cung cấp các chức năng xử lý ảnh như tăng cường chất lượng, phục hồi và nén ảnh thông qua API được xây dựng bằng **Flask**. Dự án hỗ trợ nhiều thuật toán xử lý ảnh từ cơ bản đến nâng cao và được triển khai trên nền tảng **Render.com**.
 
 ---
+## 🏗 Demo
+### https://computervision-1-kcxy.onrender.com/
+<img width="1117" alt="image" src="https://github.com/user-attachments/assets/487ec6c0-84ca-4dfd-967e-da0d687a5ee8" />
+---
 
 ## 🚀 Tính Năng  
 
@@ -57,6 +61,3 @@ python backend/app.py
 ### 4. Truy cập Frontend
 Mở file frontend/index.html trên trình duyệt để sử dụng giao diện trực quan.
 
-## 🏗 Demo
-### https://computervision-1-kcxy.onrender.com/
-<img width="1117" alt="image" src="https://github.com/user-attachments/assets/487ec6c0-84ca-4dfd-967e-da0d687a5ee8" />
